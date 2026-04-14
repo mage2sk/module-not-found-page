@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Page/etc/page_configuration.xsd">
+    <head>
+        <title>404 - Page Not Found</title>
+        <meta name="description" content="The page you requested was not found. Browse our store or search for products."/>
+    </head>
+    <body>
+        <!-- Remove default content -->
+        <referenceBlock name="cms_page" remove="true"/>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <!-- Hide the main content area (columns/sidebar) -->
+        <referenceContainer name="main.content" remove="true"/>
+
+        <!-- Put 404 page directly in page.wrapper — full width, no container constraints -->
+        <referenceContainer name="page.wrapper">
+            <block class="Panth\NotFoundPage\Block\NotFound"
+                   name="panth.notfound.page"
+                   template="Panth_NotFoundPage::notfound.phtml"
+                   after="main.content"/>
+        </referenceContainer>
+    </body>
+</page>

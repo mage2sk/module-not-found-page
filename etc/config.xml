@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <panth_notfound>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <content>
+                <heading>Page Not Found</heading>
+                <subheading>Oops! The page you're looking for doesn't exist or has been moved.</subheading>
+                <show_search>1</show_search>
+                <show_popular_links>1</show_popular_links>
+                <show_contact_info>1</show_contact_info>
+                <contact_email>support@example.com</contact_email>
+            </content>
+        </panth_notfound>
+    </default>
+</config>
