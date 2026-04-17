@@ -2,7 +2,7 @@
     "name": "mage2kishan/module-not-found-page",
     "description": "Custom 404 Not Found Page for Magento 2. Replaces the default CMS 404 page with a modern, fully configurable design featuring dynamic category links, integrated search bar, and admin-controlled content. Configurable heading, subheading, search toggle, popular-links toggle, and contact information — all scoped to store view.",
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "proprietary",
     "keywords": [
         "magento2",
