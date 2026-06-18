@@ -4,7 +4,16 @@ All notable changes to this extension are documented here. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [1.0.0] — Initial release
+## [1.0.5] - 2026-06-18
+
+### Changed
+- Rewrote README.md to match the Panth Infotech documentation standard: full Quick Answer section, accurate Configuration table sourced from system.xml, corrected feature descriptions (single shared template, category link toggle, contact email only), FAQ, support table, and Quick Links table.
+- Removed inaccurate claims about separate Hyva/Luma templates and a contact phone field that do not exist in the module.
+- Canonical URL updated to the live product page.
+
+---
+
+## [1.0.0] - Initial release
 
 ### Added
 - **Custom 404 page** — replaces the default Magento CMS noroute page
