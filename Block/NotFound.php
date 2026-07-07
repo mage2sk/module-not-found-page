@@ -34,9 +34,6 @@ class NotFound extends Template
     public function getHomeUrl(): string { return $this->_storeManager->getStore()->getBaseUrl(); }
     public function getSearchUrl(): string { return $this->getUrl('catalogsearch/result'); }
 
-    /**
-     * Get top-level store categories dynamically
-     */
     public function getTopCategories(): array
     {
         try {
