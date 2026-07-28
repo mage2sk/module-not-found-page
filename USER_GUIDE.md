@@ -1,4 +1,4 @@
-# Panth NotFoundPage — User Guide
+# Panth NotFoundPage - User Guide
 
 This guide walks store administrators through installing, configuring,
 and customizing the Panth NotFoundPage extension for Magento 2.

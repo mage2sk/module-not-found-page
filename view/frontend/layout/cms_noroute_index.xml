@@ -13,7 +13,7 @@
         <!-- Hide the main content area (columns/sidebar) -->
         <referenceContainer name="main.content" remove="true"/>
 
-        <!-- Put 404 page directly in page.wrapper — full width, no container constraints -->
+        <!-- Put 404 page directly in page.wrapper - full width, no container constraints -->
         <referenceContainer name="page.wrapper">
             <block class="Panth\NotFoundPage\Block\NotFound"
                    name="panth.notfound.page"
