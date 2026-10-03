@@ -1,0 +1,355 @@
+<?php
+/**
+ * Copyright (c) Panth Infotech. All rights reserved.
+ * Custom 404 Not Found Page
+ * @var \Panth\NotFoundPage\Block\NotFound $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+if (!$block->isEnabled()) return;
+
+$heading = $block->getHeading();
+$subheading = $block->getSubheading();
+$homeUrl = $block->getHomeUrl();
+$searchUrl = $block->getSearchUrl();
+$showSearch = $block->showSearch();
+$showLinks = $block->showPopularLinks();
+$showContact = $block->showContactInfo();
+$contactEmail = $block->getContactEmail();
+$categories = $block->getTopCategories();
+?>
+
+<style>
+.panth-404-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    padding: 40px 20px;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif !important;
+    background: #FAFAFA;
+    position: relative;
+}
+.panth-404-wrap > #contentarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    outline: none !important;
+}
+.panth-404 {
+    text-align: center;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif !important;
+}
+.panth-404 * {
+    font-family: inherit !important;
+    box-sizing: border-box;
+}
+.panth-404-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-primary-darker, #0F766E);
+    background: #F0FDFA;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+.panth-404-code {
+    font-size: 110px;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--color-primary, #0D9488), var(--color-primary-darker, #0F766E));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 10px;
+}
+.panth-404 h1 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #171717 !important;
+    margin: 0 0 8px !important;
+    line-height: 1.3 !important;
+}
+.panth-404-sub {
+    font-size: 14px;
+    color: #525252;
+    margin: 0 0 24px;
+    line-height: 1.5;
+}
+/* Search - must override ALL Luma global input/button/select styles */
+.panth-404-search {
+    display: flex !important;
+    margin: 0 0 18px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+.panth-404-search:focus-within { border-color: var(--color-primary, #0D9488) !important; box-shadow: 0 0 0 3px rgba(13,148,136,0.1) !important; }
+.panth-404 .panth-404-search input,
+.panth-404 .panth-404-search input[type="text"],
+.panth-404 .panth-404-search input[type="search"] {
+    flex: 1 !important;
+    padding: 12px 16px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    font-size: 14px !important;
+    color: #171717 !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    min-width: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: auto !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.panth-404 .panth-404-search input::placeholder { color: #737373 !important; opacity: 1 !important; }
+.panth-404 .panth-404-search input:focus,
+.panth-404 .panth-404-search input[type="text"]:focus {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+.panth-404 .panth-404-search button,
+.panth-404 .panth-404-search button[type="submit"] {
+    padding: 12px 20px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: var(--color-primary-fill, #0F766E) !important;
+    background-color: var(--color-primary-fill, #0F766E) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.panth-404 .panth-404-search button:hover,
+.panth-404 .panth-404-search button[type="submit"]:hover {
+    background: color-mix(in srgb, var(--color-primary-fill, #0F766E) 82%, #000) !important;
+    background-color: color-mix(in srgb, var(--color-primary-fill, #0F766E) 82%, #000) !important;
+}
+/* Buttons */
+.panth-404-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.panth-404 h1 + .panth-404-btns {
+    margin-top: 20px;
+}
+.panth-404-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    line-height: 1.4 !important;
+    min-height: 44px !important;
+    box-shadow: none !important;
+}
+.panth-404-btn:focus-visible,
+.panth-404-cat:focus-visible,
+.panth-404-help a:focus-visible {
+    outline: 2px solid var(--color-primary-fill, #0F766E) !important;
+    outline-offset: 2px !important;
+}
+.panth-404 .panth-404-search button:focus-visible {
+    outline: 2px solid #fff !important;
+    outline-offset: -5px !important;
+}
+.panth-404-btn-p {
+    background: var(--color-primary-fill, #0F766E) !important;
+    color: #fff !important;
+    border: 1px solid var(--color-primary-fill, #0F766E) !important;
+}
+.panth-404-btn-p:hover {
+    background: color-mix(in srgb, var(--color-primary-fill, #0F766E) 82%, #000) !important;
+    border-color: color-mix(in srgb, var(--color-primary-fill, #0F766E) 82%, #000) !important;
+    color: #fff !important;
+}
+.panth-404-btn-s {
+    background: #fff !important;
+    color: #171717 !important;
+    border: 1px solid #E5E7EB !important;
+}
+.panth-404-btn-s:hover {
+    border-color: var(--color-primary, #0D9488) !important;
+    color: var(--color-primary-darker, #0F766E) !important;
+    background: #F0FDFA !important;
+}
+/* Categories */
+.panth-404-cats { margin-bottom: 20px; }
+.panth-404-cats .panth-404-cats-title {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #525252 !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0 0 10px !important;
+}
+.panth-404-cats-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.panth-404-cat {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 5px 12px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #525252 !important;
+    background: #F5F5F5 !important;
+    text-decoration: none !important;
+    transition: all 0.15s !important;
+    border: none !important;
+}
+.panth-404-cat:hover {
+    background: var(--color-primary-fill, #0F766E) !important;
+    color: #fff !important;
+}
+/* Help */
+.panth-404-help {
+    font-size: 13px;
+    color: #525252;
+}
+.panth-404-help a,
+.panth-404-help a:visited {
+    color: var(--color-primary-darker, #0F766E) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+.panth-404-help a:hover {
+    color: var(--color-primary-darker, #0F766E) !important;
+    text-decoration: underline !important;
+}
+
+@media (max-width: 767px) {
+    .panth-404-btn-text { display: none !important; }
+    .panth-404-btns { gap: 12px; }
+    .panth-404-btn {
+        padding: 0 !important;
+        border-radius: 50% !important;
+        width: 44px !important;
+        min-width: 44px !important;
+        max-width: 44px !important;
+        height: 44px !important;
+        justify-content: center !important;
+        flex: 0 0 44px !important;
+    }
+    .panth-404-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .panth-404-sub { font-size: 14px; }
+    .panth-404-help { font-size: 14px; }
+    .panth-404-help a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+@media (max-width: 640px) {
+    .panth-404-wrap { min-height: auto; padding: 32px 20px; }
+    .panth-404 { max-width: 100%; }
+    .panth-404-badge { font-size: 12px; padding: 4px 10px; margin-bottom: 12px; }
+    .panth-404-code { font-size: 80px; margin-bottom: 4px; }
+    .panth-404 h1 { font-size: 18px !important; margin-bottom: 6px !important; }
+    .panth-404-sub { margin-bottom: 20px; }
+    .panth-404-search { margin-bottom: 14px !important; }
+    .panth-404-search input[type="text"] { padding: 9px 12px !important; }
+    .panth-404-search button[type="submit"] { padding: 9px 14px !important; }
+    .panth-404-btns { margin-bottom: 20px; }
+    .panth-404-cats { margin-bottom: 16px; }
+    .panth-404-cats .panth-404-cats-title { font-size: 12px !important; margin-bottom: 8px !important; }
+    .panth-404-cats-row { gap: 6px; }
+}
+@media (max-width: 1024px) {
+    .panth-404 .panth-404-search input[type="text"] { font-size: 16px !important; }
+}
+@media (max-width: 1024px), (pointer: coarse) {
+    .panth-404-cat { min-height: 44px !important; padding: 0 14px !important; }
+}
+</style>
+
+<main id="maincontent" class="panth-404-wrap">
+    <div id="contentarea" tabindex="-1"></div>
+    <div class="panth-404">
+        <div class="panth-404-badge">
+            <svg aria-hidden="true" focusable="false" width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            <?= $escaper->escapeHtml(__('Error 404')) ?>
+        </div>
+
+        <div class="panth-404-code" aria-hidden="true">404</div>
+        <h1><?= $escaper->escapeHtml($heading) ?></h1>
+
+        <?php if ($subheading): ?>
+            <p class="panth-404-sub"><?= $escaper->escapeHtml($subheading) ?></p>
+        <?php endif; ?>
+
+        <?php if ($showSearch): ?>
+            <form class="panth-404-search" role="search" action="<?= $escaper->escapeUrl($searchUrl) ?>" method="get">
+                <input type="text" name="q" required maxlength="128" autocomplete="off" aria-label="<?= $escaper->escapeHtmlAttr(__('Search the store')) ?>" placeholder="<?= $escaper->escapeHtmlAttr(__('Search products...')) ?>" />
+                <button type="submit">
+                    <svg aria-hidden="true" focusable="false" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <?= $escaper->escapeHtml(__('Search')) ?>
+                </button>
+            </form>
+        <?php endif; ?>
+
+        <div class="panth-404-btns">
+            <a href="<?= $escaper->escapeUrl($homeUrl) ?>" class="panth-404-btn panth-404-btn-p" aria-label="<?= $escaper->escapeHtmlAttr(__('Back to Homepage')) ?>" title="<?= $escaper->escapeHtmlAttr(__('Back to Homepage')) ?>">
+                <svg aria-hidden="true" focusable="false" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                <span class="panth-404-btn-text"><?= $escaper->escapeHtml(__('Back to Homepage')) ?></span>
+            </a>
+            <button type="button" data-home-url="<?= $escaper->escapeUrl($homeUrl) ?>" onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = this.dataset.homeUrl; }" class="panth-404-btn panth-404-btn-s" aria-label="<?= $escaper->escapeHtmlAttr(__('Go Back')) ?>" title="<?= $escaper->escapeHtmlAttr(__('Go Back')) ?>">
+                <svg aria-hidden="true" focusable="false" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                <span class="panth-404-btn-text"><?= $escaper->escapeHtml(__('Go Back')) ?></span>
+            </button>
+        </div>
+
+        <?php if ($showLinks && !empty($categories)): ?>
+            <nav class="panth-404-cats" aria-labelledby="panth-404-cats-title">
+                <h2 class="panth-404-cats-title" id="panth-404-cats-title"><?= $escaper->escapeHtml(__('Browse Categories')) ?></h2>
+                <div class="panth-404-cats-row">
+                    <?php foreach ($categories as $cat): ?>
+                        <a href="<?= $escaper->escapeUrl($cat['url']) ?>" class="panth-404-cat"><?= $escaper->escapeHtml($cat['name']) ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </nav>
+        <?php endif; ?>
+
+        <?php if ($showContact && $contactEmail): ?>
+            <div class="panth-404-help">
+                <?= $escaper->escapeHtml(__('Need help?')) ?>
+                <a href="mailto:<?= $escaper->escapeHtmlAttr($contactEmail) ?>"><?= $escaper->escapeHtml($contactEmail) ?></a>
+            </div>
+        <?php endif; ?>
+    </div>
+</main>
